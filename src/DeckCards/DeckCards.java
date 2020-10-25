@@ -1,4 +1,5 @@
-import javax.naming.Name;
+package DeckCards;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
@@ -6,14 +7,6 @@ import java.util.Objects;
 public final class DeckCards implements Cloneable, Serializable {
     private DeckCards.Card[][] cards = new DeckCards.Card[4][9];
     private final int numberCards = 36;
-
-    private enum SuitCard {
-        Clubs,
-        Spades,
-        Hearts,
-        Diamonds
-    }
-
     private final String[] Names = {"6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
 
     public DeckCards() {
@@ -22,7 +15,6 @@ public final class DeckCards implements Cloneable, Serializable {
                 this.cards[row][col] = new DeckCards.Card(6 + col, SuitCard.values()[row], Names[col]);
             }
         }
-
     }
 
     class Card {
@@ -38,7 +30,7 @@ public final class DeckCards implements Cloneable, Serializable {
     }
 
     public Card[][] getCards() {
-        return cards;
+        return cards.clone();
     }
 
     public int getNumberCards() {
@@ -82,3 +74,4 @@ public final class DeckCards implements Cloneable, Serializable {
     }
 
 }
+
