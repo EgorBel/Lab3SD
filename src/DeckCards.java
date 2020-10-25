@@ -1,54 +1,84 @@
-public final class DeckCards {
+import javax.naming.Name;
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Objects;
+
+public final class DeckCards implements Cloneable, Serializable {
     private DeckCards.Card[][] cards = new DeckCards.Card[4][9];
-    private final String[] suitCard = new String[]{"Clubs", "Spades", "Hearts", "Diamonds"};
     private final int numberCards = 36;
 
+    private enum SuitCard {
+        Clubs,
+        Spades,
+        Hearts,
+        Diamonds
+    }
+
+    private final String[] Names = {"6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
+
     public DeckCards() {
-        for(int i = 0; i < 4; ++i) {
-            for(int j = 0; j < 9; ++j) {
-                this.cards[i][j] = new DeckCards.Card(6 + j, this.suitCard[i]);
+        for (int row = 0; row < 4; ++row) {
+            for (int col = 0; col < 9; ++col) {
+                this.cards[row][col] = new DeckCards.Card(6 + col, SuitCard.values()[row], Names[col]);
             }
         }
 
     }
 
     class Card {
-        int point;
-        String suit;
-        String Name;
+        private int point;
+        private SuitCard suit;
+        private String Name;
 
-        Card(int point, String suit) {
+        Card(int point, SuitCard suit, String Name) {
             this.point = point;
             this.suit = suit;
-            switch(point) {
-                case 6:
-                    this.Name = "6";
-                    break;
-                case 7:
-                    this.Name = "7";
-                    break;
-                case 8:
-                    this.Name = "8";
-                    break;
-                case 9:
-                    this.Name = "9";
-                    break;
-                case 10:
-                    this.Name = "10";
-                    break;
-                case 11:
-                    this.Name = "Jack";
-                    break;
-                case 12:
-                    this.Name = "Queen";
-                    break;
-                case 13:
-                    this.Name = "King";
-                    break;
-                case 14:
-                    this.Name = "Ace";
-            }
-
+            this.Name = Name;
         }
     }
+
+    public Card[][] getCards() {
+        return cards;
+    }
+
+    public int getNumberCards() {
+        return numberCards;
+    }
+
+    public String[] getNames() {
+        return Names;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DeckCards deckCards = (DeckCards) o;
+        return numberCards == deckCards.numberCards &&
+                Arrays.equals(cards, deckCards.cards) &&
+                Arrays.equals(Names, deckCards.Names);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(numberCards);
+        result = 31 * result + Arrays.hashCode(cards);
+        result = 31 * result + Arrays.hashCode(Names);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "DeckCards{" +
+                "cards=" + Arrays.toString(cards) +
+                ", numberCards=" + numberCards +
+                ", Names=" + Arrays.toString(Names) +
+                '}';
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
 }
