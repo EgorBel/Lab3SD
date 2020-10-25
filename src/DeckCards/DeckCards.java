@@ -27,10 +27,19 @@ public final class DeckCards implements Cloneable, Serializable {
             this.suit = suit;
             this.Name = Name;
         }
+
+        @Override
+        public String toString() {
+            return "Card{" +
+                    "point=" + point +
+                    ", suit=" + suit +
+                    ", Name='" + Name + '\'' +
+                    '}';
+        }
     }
 
-    public Card getCard(int row, int cow) {
-        return cards[row][cow];
+    public Card getCard(int SuitCard, int Card) {
+        return cards[SuitCard][Card];
     }
 
     public int getNumberCards() {
@@ -64,11 +73,13 @@ public final class DeckCards implements Cloneable, Serializable {
 
     @Override
     public String toString() {
-        return "DeckCards{" +
-                "cards=" + Arrays.toString(cards) +
-                ", numberCards=" + numberCards +
-                ", Names=" + Arrays.toString(Names) +
-                '}';
+        String str = "";
+        for (Card[] SuitCard : cards) {
+            for (Card card : SuitCard) {
+                str += card.suit + "   " + card.Name + "\n";
+            }
+        }
+        return str;
     }
 
     @Override
