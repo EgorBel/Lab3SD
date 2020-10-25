@@ -29,8 +29,8 @@ public final class DeckCards implements Cloneable, Serializable {
         }
     }
 
-    public Card[][] getCards() {
-        return cards.clone();
+    public Card getCard(int row, int cow) {
+        return cards[row][cow];
     }
 
     public int getNumberCards() {
@@ -44,8 +44,11 @@ public final class DeckCards implements Cloneable, Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
         DeckCards deckCards = (DeckCards) o;
+
         return numberCards == deckCards.numberCards &&
                 Arrays.equals(cards, deckCards.cards) &&
                 Arrays.equals(Names, deckCards.Names);
